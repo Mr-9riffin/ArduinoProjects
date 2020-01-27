@@ -1,0 +1,12 @@
+How to program the ATTINY with arduino
+https://www.instructables.com/id/How-to-Program-an-Attiny85-From-an-Arduino-Uno/
+
+
+
+For IR reading to work
+
+Board AT25/45/85
+Processor AT85
+Programmer Arduino as ISP
+Burn boot loader at internal 1mhz (I think?)
+
