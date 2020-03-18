@@ -24,9 +24,8 @@
 #include <TimeLib.h>
 #include <DS1307RTC.h>
 #include <SPI.h>
-//#include <SD.h>
 
-#include "SdFat.h"
+#include <SdFat.h>
 SdFat SD;
 
 #define SD_CS_PIN SS

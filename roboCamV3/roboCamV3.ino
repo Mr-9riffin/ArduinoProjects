@@ -18,8 +18,6 @@
 
 */
 
-//#include <DS3232RTC.h>
-
 #include <Wire.h>
 #include <TimeLib.h>
 #include <DS1307RTC.h>
@@ -64,18 +62,18 @@ void setup() {
   pinMode(shutter, OUTPUT);
 
   // Open serial communications and wait for port to open:
-  Serial.begin(9600);
-  while (!Serial) {
-    ;// wait for serial port to connect. Needed for native USB port only
-  }
+  //Serial.begin(9600);
+  //while (!Serial) {
+  //  ;// wait for serial port to connect. Needed for native USB port only
+  //}
 
-  Serial.print("Initializing SD card...");
+  //Serial.print("Initializing SD card...");
 
-  if (!SD.begin(4)) {
-    Serial.println("initialization failed!");
+  if (!SD.begin(SD_CS_PIN)) {
+    //Serial.println("initialization failed!");
     while (1);
   }
-  Serial.println("initialization done.");
+  //Serial.println("initialization done.");
 
   DST = isItDST();
 }
@@ -87,24 +85,25 @@ void loop() {
     setPicTimes();
   }
 
-  Serial.print(F("am, pm: "));
-  Serial.println(String(amHour) + ":" + amMin + ", " + pmHour + ":" + pmMin);
+  //Serial.print(F("am, pm: "));
+  //Serial.println(String(amHour) + ":" + amMin + ", " + pmHour + ":" + pmMin);
   cHour = tm.Hour;
   cMin = tm.Minute;
-  Serial.println(String(cHour) + ":" + cMin);
+  //Serial.println(String(cHour) + ":" + cMin);
   delay(2000);
+
   if (cHour == amHour && cMin == amMin && !amPicTaken) {
-    Serial.println(F("take AM"));
+    //Serial.println(F("take AM"));
     takePic();
     amPicTaken = true;
   }
   if (cHour == (pmHour + amHour) / 2 && cMin == (amMin + pmMin) / 2 && !noonPicTaken) {
-    Serial.println(F("take Noon"));
+    //Serial.println(F("take Noon"));
     takePic();
     noonPicTaken = true;
   }
   if (cHour == pmHour && cMin == pmMin && !pmPicTaken) {
-    Serial.println(F("take PM"));
+    //Serial.println(F("take PM"));
     takePic();
     pmPicTaken = true;
   }
@@ -119,8 +118,8 @@ void initializeDate() {
   if (d != currentDay) {
     m = tm.Month;
     currentDay = d;
-    Serial.print(F("Date: "));
-    Serial.println(String(m) + "/" + d);
+    //Serial.print(F("Date: "));
+    //Serial.println(String(m) + "/" + d);
     newDay = true;
   }
 }
@@ -137,7 +136,7 @@ void setPicTimes() {
         output += data;
         data = myFile.read();
       } while (data != '\n' && data != '\r');
-      Serial.println(output);
+      //Serial.println(output);
       checkDate();
       output = "";
       data = myFile.read();
@@ -146,7 +145,7 @@ void setPicTimes() {
     myFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println(F("error opening test.txt"));
+    //Serial.println(F("error opening test.txt"));
   }
   amPicTaken = false;
   pmPicTaken = false;
@@ -226,6 +225,6 @@ void takePic() {
     //Serial.println("done.");
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening data.txt");
+    //Serial.println("error opening data.txt");
   }
 }// end of takePic
